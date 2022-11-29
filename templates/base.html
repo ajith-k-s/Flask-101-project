@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo app</title>
+</head>
+<body bgcolor="adb5bd" align="center">
+    <font size="4" face="Courier New">
+    <h1>Todo App</h1>
+
+    <h3>
+
+    <form action="/add" method="post">
+            <label for="title">New todo</label>
+            <input type="text" name="title" placeholder="Enter Todo..." style="width: 300px;height: 30px;">
+            <button type="submit" style="width:80px; height:50px;"><h3>Create</h3></button>
+    </form>
+    <br>
+    <div align="center" > 
+    <table cellpadding="10" cellspacing="10" border="5" bgcolor="#446065" style="text-align:center;border-collapse: separate; width: 50%;">    
+        <tr bgcolor="#668287">
+            <th>No.</th>
+            <th>Todo</th>
+            <th>Status</th>
+        </tr>
+        {% for i in range(todos|length) %}
+        <tr bgcolor="{% if todos[i].complete == True %} #409040 {% else %} #904040 {% endif %}">
+            <td>{{ i+1 }}</td>
+            <td>{{ todos[i].title }}</td>
+            <td>
+            {% if todos[i].complete ==  False %}
+                Not completed
+            {% else %}
+                Completed
+            {% endif %}
+            </td>
+            <td>
+                <a href="/update/{{ todos[i].id }}">
+                    <button style="width: 100px;height: 50px; color: #000000; background-color: #00cecb">Update</button>
+                </a>
+            </td>
+            <td>
+                <a href="/delete/{{ todos[i].id }}">
+                    <button style="width: 100px;height: 50px; color: #000000; background-color :#ff5e5b"><h3>Delete</h3></button>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+    <br>
+    <a href="/delcmp">
+        <button style="width: 300px; height: 50px; background-color: #668287;"><h3>Delete all completed todos</h3></button>
+    </a>
+    </h3>
+</body>
+</html>
