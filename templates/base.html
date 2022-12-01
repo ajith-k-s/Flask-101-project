@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo app</title>
+
+
+    <style>
+        .options {
+            background-color: #668287;
+            width: 200px;
+        }
+    </style>
+
+    
+    <script>
+        function checkem()
+        {
+            var x = document.forms["newtodo"]["title"].value;
+            if (x == "")
+            {
+                alert("New todo must not be empty");
+                return false;
+            }
+        }
+    </script>
+
+
+</head>
+<body bgcolor="#e8e8e2" align="center"> 
+    <!-- adb5bd -->
+    <font size="4" face="Courier New">
+    <h1 style="color:#6E46A4;">Todo App</h1>
+
+
+    <form name="newtodo" action="/add" method="post" onsubmit="return checkem()">
+        <div>
+            <label for="title"></label>
+            <input type="text" name="title" placeholder="Create new Todo...">
+            <button type="submit">Create</button>
+        </div>
+    </form>
+
+
+
+    <br>
+    <div align="center" >
+    {% if todos %}
+    <table cellpadding="10" style="text-align:center; width: 60%; border-collapse: collapse;">    
+        {% for todo in todos %}
+        <tr bgcolor="{% if todo.complete == True %} #409040 {% else %} #FF5555 {% endif %}">
+            <td>
+                    <input type="checkbox" name="update" id="update" onclick="location.href='/update/{{todo.id}}'"
+                    {% if todo.complete == True %} checked {% endif %}>
+            </td>
+            <td style="width: 80%;">{{ todo.title }}</td>
+            <td>
+                <a href="/delete/{{todo.id}}">
+                    <button style="color: #000000; background-color :#ff0000"><b>X</b></button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+
+
+
+    <br>
+    <div align="center">
+    <table>
+        <tr>
+            <td>
+                <a href="/mkcmp">
+                    <button class="options">Mark all as completed</button>
+                </a>
+            </td>
+            <td>
+                <a href="/mkucmp">
+                    <button class="options">Mark all as Uncompleted</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/delcmp">
+                    <button class="options">Delete all completed todos</button>
+                </a>
+            </td>
+            <td>
+                <a href="/delall">
+                    <button class="options">Delete all todos</button>
+                </a>
+            </td>
+        </tr>
+    </table>
+    </div>
+    {% else %}
+        Woohoo, Nothing to do!
+    {% endif %}
+</body>
+</html>
